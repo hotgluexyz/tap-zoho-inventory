@@ -109,13 +109,3 @@ class ProductDetailsStream(ZohoInventoryStream):
     def parse_response(self, response):
         yield from extract_jsonpath(self.records_jsonpath, input=response.json())
 
-
-class VendorsStream(ZohoInventoryStream):
-    name = "contacts"
-    path = "/vendors"
-    records_jsonpath = "$.contact[*]"
-
-    schema_filepath = SCHEMAS_DIR / "vendors_indv_schema.json"
-
-
-
