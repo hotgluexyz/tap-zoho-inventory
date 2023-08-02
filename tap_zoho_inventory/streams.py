@@ -73,7 +73,7 @@ class SuppliersStream(ZohoInventoryStream):
     """Define custom stream."""
     name = "contacts"
     path = "/vendors"
-    records_jsonpath = "$.contact"
+    records_jsonpath = "$.contact[*]"
     schema_filepath = SCHEMAS_DIR / "contacts_indv_schema.json"
 
 
@@ -81,7 +81,7 @@ class SalesOrderDetailsStream(ZohoInventoryStream):
     name = "salesorder"
     path = "/salesorders/{salesorder_id}"
     parent_stream_type = SalesOrdersStream
-    records_jsonpath = "$.salesorder"
+    records_jsonpath = "$.salesorder[*]"
     schema_filepath = SCHEMAS_DIR / "salesorders_details_indv_schema.json"
 
     def parse_response(self, response):
@@ -103,7 +103,7 @@ class ProductDetailsStream(ZohoInventoryStream):
     name = "product"
     path = "/items/{item_id}"
     parent_stream_type = ProductsStream
-    records_jsonpath = "$.item"
+    records_jsonpath = "$.item[*]"
     schema_filepath = SCHEMAS_DIR / "product_details_indv_schema.json"
 
     def parse_response(self, response):
