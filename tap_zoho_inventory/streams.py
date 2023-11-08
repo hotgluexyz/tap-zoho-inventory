@@ -112,3 +112,10 @@ class ProductDetailsStream(ZohoInventoryStream):
     def parse_response(self, response):
         yield from extract_jsonpath(self.records_jsonpath, input=response.json())
 
+class PurchaseReceivesStream(ZohoInventoryStream):
+    """Define custom stream."""
+    name = "purchase_receives"
+    path = "/purchasereceives"
+    records_jsonpath = "$.purchasereceives[*]"
+    schema_filepath = SCHEMAS_DIR / "purchase_receives_indv_schema.json"
+    replication_key = "last_modified_time"
