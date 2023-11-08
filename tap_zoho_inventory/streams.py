@@ -117,5 +117,5 @@ class PurchaseReceivesStream(ZohoInventoryStream):
     name = "purchase_receives"
     path = "/purchasereceives"
     records_jsonpath = "$.purchasereceives[*]"
-    schema_filepath = SCHEMAS_DIR / "purchase_receives_indv_schema.json"
+    schema_filepath = SCHEMAS_DIR / "purchase_receives_schema.json"
     replication_key = "last_modified_time"
