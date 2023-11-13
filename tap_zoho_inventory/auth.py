@@ -32,12 +32,12 @@ class ZohoInventoryAuthenticator(OAuthAuthenticator, metaclass=SingletonMeta):
     def auth_headers(self) -> dict:
         if not self.is_token_valid():
             self.update_access_token()
-            
+
         result = super().auth_headers
         result["Authorization"] = f"Zoho-oauthtoken {self.access_token}"
 
         return result
-       
+
 
     @classmethod
     def create_for_stream(cls, stream) -> ZohoInventoryAuthenticator:  # noqa: ANN001
@@ -52,5 +52,5 @@ class ZohoInventoryAuthenticator(OAuthAuthenticator, metaclass=SingletonMeta):
         return cls(
             stream=stream,
             auth_endpoint="https://accounts.zoho.com/oauth/v2/token",
-            oauth_scopes="ZohoInventory.salesorders.READ,ZohoInventory.contacts.READ,ZohoInventory.items.READ,ZohoInventory.purchaseorders.READ",
+            oauth_scopes="ZohoInventory.salesorders.READ,ZohoInventory.contacts.READ,ZohoInventory.items.READ,ZohoInventory.purchaseorders.READ,ZohoInventory.purchasereceives.READ",
         )
