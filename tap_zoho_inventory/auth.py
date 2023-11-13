@@ -40,7 +40,7 @@ class ZohoInventoryAuthenticator(OAuthAuthenticator, metaclass=SingletonMeta):
 
 
     @classmethod
-    def create_for_stream(cls, stream) -> ZohoInventoryAuthenticator:  # noqa: ANN001
+    def create_for_stream(cls, stream, auth_endpoint) -> ZohoInventoryAuthenticator:  # noqa: ANN001
         """Instantiate an authenticator for a specific Singer stream.
 
         Args:

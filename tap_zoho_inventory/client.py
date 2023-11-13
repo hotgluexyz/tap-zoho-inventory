@@ -31,9 +31,11 @@ class ZohoInventoryStream(RESTStream):
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
-        # TODO: hardcode a value here, or retrieve it from self.config
-        return "https://www.zohoapis.com/inventory/v1"
-         # Or override `parse_response`.
+        account_server = self.config.get(
+            "accounts-server", "https://accounts.zoho.com"
+        )
+        account_server = account_server.replace("accounts.", "inventory.")
+        return f"{account_server}/api/v1"
 
     # Set this value or override `get_new_paginator`.
     next_page_token_jsonpath = "$.page_context.page"  # noqa: S105
@@ -54,6 +56,8 @@ class ZohoInventoryStream(RESTStream):
 
         return None
 
+    def backoff_wait_generator(self):
+        return backoff.expo(base=3, factor=6)
 
     @cached_property
     def authenticator(self) -> _Auth:
@@ -62,7 +66,11 @@ class ZohoInventoryStream(RESTStream):
         Returns:
             An authenticator instance.
         """
-        return ZohoInventoryAuthenticator.create_for_stream(self)
+        account_server = self.config.get(
+            "accounts-server", "https://accounts.zoho.com"
+        )
+        auth_endpoint = f"{account_server}/oauth/v2/token"
+        return ZohoInventoryAuthenticator.create_for_stream(self, auth_endpoint=auth_endpoint)
 
     @property
     def http_headers(self) -> dict:
@@ -151,6 +159,13 @@ class ZohoInventoryStream(RESTStream):
             id_field = lookup_name if not lookup_name.endswith('s') else lookup_name[:-1]
             id_field = f'{id_field}_id'
             self.logger.info(f"Using {id_field} as id field")
+        except KeyError:
+            self.logger.info(f"Could not find {lookup_name} in response, falling back on url part")
+            for key, value in response.json().items():
+                if isinstance(value, list):
+                    lookup_name = key
+                    id_field = [x for x in value[0].keys() if x.endswith('_id')][0]
+                    break
 
         if getattr(self, "has_lines", True):
             for record in response.json()[lookup_name]:
@@ -206,3 +221,7 @@ class ZohoInventoryStream(RESTStream):
             ),
         )
         return request
+
+    def validate_response(self, response):
+        sleep(1.01)
+        return super().validate_response(response)
