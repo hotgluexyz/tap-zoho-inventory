@@ -112,3 +112,19 @@ class PurchaseReceivesStream(ZohoInventoryStream):
     schema_filepath = SCHEMAS_DIR / "purchase_receives_schema.json"
     replication_key = "last_modified_time"
     has_lines = False
+
+    def get_child_context(self, record, context):
+        """Return a child context object for a given record."""
+        return {
+            "purchasereceive_id": record["purchasereceive_id"],
+        }
+
+class PurchaseReceiveDetailStream(ZohoInventoryStream):
+    name = "purchasereceive_details"
+    path = "/purchasereceives/{purchasereceive_id}"
+    parent_stream_type = PurchaseReceivesStream
+    records_jsonpath = "$.purchasereceives[*]"
+    schema_filepath = SCHEMAS_DIR / "purchasereceives_details_indv_schema.json"
+
+    def parse_response(self, response):
+        yield from extract_jsonpath(self.records_jsonpath, input=response.json())
