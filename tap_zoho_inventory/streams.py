@@ -119,11 +119,12 @@ class PurchaseReceivesStream(ZohoInventoryStream):
             "purchasereceive_id": record["purchasereceive_id"],
         }
 
-class PurchaseReceiveDetailStream(ZohoInventoryStream):
-    name = "purchasereceive_details"
+
+class PurchaseReceivesDetailStream(ZohoInventoryStream):
+    name = "purchasereceives_details"
     path = "/purchasereceives/{purchasereceive_id}"
     parent_stream_type = PurchaseReceivesStream
-    records_jsonpath = "$.purchasereceives[*]"
+    records_jsonpath = "$.purchasereceive[*]"
     schema_filepath = SCHEMAS_DIR / "purchasereceives_details_indv_schema.json"
 
     def parse_response(self, response):
