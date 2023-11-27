@@ -98,7 +98,7 @@ class ProductDetailsStream(ZohoInventoryStream):
     name = "product_details"
     path = "/items/{item_id}"
     parent_stream_type = ProductsStream
-    records_jsonpath = "$.product[*]"
+    records_jsonpath = "$.item[*]"
     schema_filepath = SCHEMAS_DIR / "product_details_indv_schema.json"
 
     def parse_response(self, response):
