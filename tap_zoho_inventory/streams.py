@@ -156,7 +156,7 @@ class CompositeItemsStream(ZohoInventoryStream):
     records_jsonpath = "$.compositeitem[*]"
     replication_key = "last_modified_time"
     schema_filepath = SCHEMAS_DIR / "composite_items_schema.json"
-    custom_fields_key = "composite_items"
+    custom_fields_key = "composite_item"
 
     def get_child_context(self, record, context):
         """Return a child context object for a given record."""
