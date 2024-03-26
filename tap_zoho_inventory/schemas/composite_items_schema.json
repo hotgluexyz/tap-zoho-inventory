@@ -41,7 +41,7 @@
       "tax_percentage": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "tax_type": {
@@ -53,7 +53,7 @@
       "purchase_account_id": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "purchase_account_name": {
@@ -65,7 +65,7 @@
       "account_id": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "account_name": {
@@ -77,7 +77,7 @@
       "inventory_account_id": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "inventory_account_name": {
@@ -101,7 +101,7 @@
       "is_combo_product": {
         "type": [
           "null",
-          "string"
+          "boolean"
         ]
       },
       "item_type": {
@@ -113,37 +113,37 @@
       "rate": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "pricebook_rate": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "purchase_rate": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "reorder_level": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "initial_stock": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "initial_stock_rate": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "vendor_id": {
@@ -161,25 +161,25 @@
       "stock_on_hand": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "asset_value": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "available_stock": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "actual_available_stock": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "sku": {
@@ -191,7 +191,7 @@
       "upc": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "ean": {
@@ -203,7 +203,7 @@
       "isbn": {
         "type": [
           "null",
-          "string"
+          "number"
         ]
       },
       "part_number": {
