@@ -29,7 +29,6 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 class ZohoInventoryStream(RESTStream):
     """ZohoInventory stream class."""
     custom_fields_list = []
-    extra_retry_statuses = [429,102]
     def _get_custom_fields(self):
         # Gets all of the custom fields from the account preferences
         url = self.url_base + "/settings/preferences/"
