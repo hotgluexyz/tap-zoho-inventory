@@ -29,11 +29,12 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 class ZohoInventoryStream(RESTStream):
     """ZohoInventory stream class."""
     custom_fields_list = []
-
+    extra_retry_statuses = [429,102]
     def _get_custom_fields(self):
         # Gets all of the custom fields from the account preferences
         url = self.url_base + "/settings/preferences/"
-        response = self._request(self.prepare_request_lines(url=url), context={})
+        decorated_request = self.request_decorator(self._request)
+        response = decorated_request(self.prepare_request_lines(url=url), context={})
         if response.status_code == 401:
             return {}
         custom_fields = response.json()["customfields"]
@@ -274,4 +275,4 @@ class ZohoInventoryStream(RESTStream):
 
     def validate_response(self, response):
         sleep(1.01)
-        return super().validate_response(response)
+        super().validate_response(response)
