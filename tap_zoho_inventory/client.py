@@ -15,7 +15,7 @@ from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.pagination import BaseAPIPaginator  # noqa: TCH002
 from singer_sdk.streams import RESTStream
 from tap_zoho_inventory.auth import ZohoInventoryAuthenticator
-
+from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 
 if sys.version_info >= (3, 8):
     from functools import cached_property
@@ -275,3 +275,21 @@ class ZohoInventoryStream(RESTStream):
     def validate_response(self, response):
         sleep(1.01)
         return super().validate_response(response)
+    
+    def request_decorator(self, func: Callable) -> Callable:    
+        decorator: Callable = backoff.on_exception(
+            self.backoff_wait_generator,
+            (
+                ConnectionResetError,
+                RetriableAPIError,
+                requests.exceptions.ReadTimeout,
+                requests.exceptions.ConnectionError,
+                requests.exceptions.ChunkedEncodingError,
+                requests.exceptions.ContentDecodingError,
+                BrokenPipeError
+            ),
+            max_tries=self.backoff_max_tries,
+            on_backoff=self.backoff_handler,
+            jitter=self.backoff_jitter,
+        )(func)
+        return decorator
