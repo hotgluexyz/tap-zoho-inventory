@@ -163,3 +163,16 @@ class CompositeItemsStream(ZohoInventoryStream):
         return {
             "composite_item_id": record["composite_item_id"],
         }
+
+class CompositeItemsDetailsStream(ZohoInventoryStream):
+    name = "composite_items_details"
+    path = "/compositeitems/{composite_item_id}"
+    parent_stream_type = CompositeItemsStream
+    records_jsonpath = "$.compositeitem[*]"
+    schema_filepath = SCHEMAS_DIR / "composite_items_indv_schema.json"
+    custom_fields_key = "composite_item"
+
+    def parse_response(self, response):
+        for record in extract_jsonpath(self.records_jsonpath, input=response.json()):
+            record = self.move_custom_fields_to_root(record)
+            yield record
