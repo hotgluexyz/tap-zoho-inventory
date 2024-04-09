@@ -34,7 +34,10 @@ class ZohoInventoryStream(RESTStream):
         # Gets all of the custom fields from the account preferences
         url = self.url_base + "/settings/preferences/"
         decorated_request = self.request_decorator(self._request)
-        response = decorated_request(self.prepare_request_lines(url=url), context={})
+        params = {}
+        if self.config.get("organization_id") is not None:
+            params['organization_id'] = self.config.get("organization_id")
+        response = decorated_request(self.prepare_request_lines(url=url,params=params), context={})
         if response.status_code == 401:
             return {}
         custom_fields = response.json()["customfields"]
@@ -218,7 +221,10 @@ class ZohoInventoryStream(RESTStream):
                 sleep(1)
                 try:
                     url = self.url_base + "/" + lookup_name + f"/{record[id_field]}"
-                    response_obj = decorated_request(self.prepare_request_lines(url,{}), {})
+                    params = {}
+                    if self.config.get("organization_id") is not None:
+                        params['organization_id'] = self.config.get("organization_id")
+                    response_obj = decorated_request(self.prepare_request_lines(url,params), {})
                     detailed_record = list(extract_jsonpath(self.records_jsonpath, input=response_obj.json()))[0]
                     detailed_record = self.move_custom_fields_to_root(detailed_record)
                     yield detailed_record
