@@ -15,6 +15,7 @@ from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.pagination import BaseAPIPaginator  # noqa: TCH002
 from singer_sdk.streams import RESTStream
 from tap_zoho_inventory.auth import ZohoInventoryAuthenticator
+from singer_sdk.exceptions import FatalAPIError, RetriableAPIError
 
 
 if sys.version_info >= (3, 8):
@@ -277,4 +278,14 @@ class ZohoInventoryStream(RESTStream):
 
     def validate_response(self, response):
         sleep(1.01)
-        super().validate_response(response)
+        if (
+            response.status_code in self.extra_retry_statuses
+            or 500 <= response.status_code < 600
+        ):
+            msg = self.response_error_message(response)
+            self.logger.warn(f"Status code: {response.status_code}, message: {response.text}")
+            raise RetriableAPIError(msg, response)
+        elif 400 <= response.status_code < 500:
+            self.logger.warn(f"Status code: {response.status_code}, message: {response.text}")
+            msg = self.response_error_message(response)
+            raise FatalAPIError(msg)
