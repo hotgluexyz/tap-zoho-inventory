@@ -411,7 +411,8 @@
         "attribute_id1": {
           "type": [
             "null",
-            "number"
+            "number",
+            "string"
           ]
         },
         "attribute_name1": {
@@ -447,7 +448,8 @@
         "attribute_option_id1": {
           "type": [
             "null",
-            "number"
+            "number",
+            "string"
           ]
         },
         "attribute_option_name1": {
@@ -459,7 +461,8 @@
         "hsn_or_sac": {
           "type": [
             "null",
-            "number"
+            "number",
+            "string"
           ]
         },
         "sat_item_key_code": {
@@ -498,7 +501,8 @@
     "attribute_id1": {
       "type": [
         "null",
-        "number"
+        "number",
+        "string"
       ]
     },
     "attribute_name1": {
@@ -534,7 +538,8 @@
     "attribute_option_id1": {
       "type": [
         "null",
-        "number"
+        "number",
+        "string"
       ]
     },
     "attribute_option_name1": {
@@ -546,7 +551,8 @@
     "hsn_or_sac": {
       "type": [
         "null",
-        "number"
+        "number",
+        "string"
       ]
     },
     "sat_item_key_code": {
