@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 import requests
 import backoff
+import time
 from datetime import timedelta
 from time import sleep
 from pathlib import Path
@@ -86,6 +87,18 @@ class ZohoInventoryStream(RESTStream):
 
         return None
 
+    def _handle_rate_limit(self, response):
+        """Handle rate limit response by extracting information and backing off appropriately."""
+        retry_after = response.headers.get('Retry-After')
+        
+        if retry_after:
+            sleep_time = int(retry_after)
+        else:
+            sleep_time = 60
+            
+        self.logger.info(f"Rate limit hit. Backing off for {sleep_time} seconds.")
+        time.sleep(sleep_time)
+        
     def backoff_wait_generator(self):
         return backoff.expo(base=3, factor=6)
 
@@ -284,6 +297,11 @@ class ZohoInventoryStream(RESTStream):
 
     def validate_response(self, response):
         sleep(1.01)
+        
+        if response.status_code == 429:
+            self._handle_rate_limit(response)
+            return
+        
         if (
             response.status_code in self.extra_retry_statuses
             or 500 <= response.status_code < 600
