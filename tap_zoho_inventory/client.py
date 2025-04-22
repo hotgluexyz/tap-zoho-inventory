@@ -6,7 +6,7 @@ import sys
 import requests
 import backoff
 import time
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 from time import sleep
 from pathlib import Path
 from pendulum import parse
@@ -90,11 +90,21 @@ class ZohoInventoryStream(RESTStream):
     def _handle_rate_limit(self, response):
         """Handle rate limit response by extracting information and backing off appropriately."""
         retry_after = response.headers.get('Retry-After')
+        sleep_time = 60  # Default fallback
         
         if retry_after:
-            sleep_time = int(retry_after)
-        else:
-            sleep_time = 60
+            try:
+                # First try parsing as delay-seconds (integer)
+                sleep_time = int(retry_after)
+            except ValueError:
+                try:
+                    # If not an integer, try parsing as HTTP-date using pendulum
+                    retry_date = parse(retry_after)
+                    now = datetime.now(timezone.utc)
+                    sleep_time = max(1, int((retry_date - now).total_seconds()))
+                except (ValueError, TypeError):
+                    # If both formats fail, use default
+                    self.logger.warning(f"Could not parse Retry-After header: {retry_after}")
             
         self.logger.info(f"Rate limit hit. Backing off for {sleep_time} seconds.")
         time.sleep(sleep_time)
