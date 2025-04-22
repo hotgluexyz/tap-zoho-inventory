@@ -90,7 +90,7 @@ class ZohoInventoryStream(RESTStream):
     def _handle_rate_limit(self, response):
         """Handle rate limit response by extracting information and backing off appropriately."""
         retry_after = response.headers.get('Retry-After')
-        sleep_time = 60  # Default fallback
+        sleep_time = 60  
         
         if retry_after:
             try:
@@ -103,7 +103,6 @@ class ZohoInventoryStream(RESTStream):
                     now = datetime.now(timezone.utc)
                     sleep_time = max(1, int((retry_date - now).total_seconds()))
                 except (ValueError, TypeError):
-                    # If both formats fail, use default
                     self.logger.warning(f"Could not parse Retry-After header: {retry_after}")
             
         self.logger.info(f"Rate limit hit. Backing off for {sleep_time} seconds.")
@@ -309,8 +308,10 @@ class ZohoInventoryStream(RESTStream):
         sleep(1.01)
         
         if response.status_code == 429:
+            msg = f"Rate limit exceeded: {response.text}"
+            self.logger.warning(msg)
             self._handle_rate_limit(response)
-            return
+            raise RetriableAPIError(msg, response)
         
         if (
             response.status_code in self.extra_retry_statuses
