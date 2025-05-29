@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Iterable, Dict, Any, Optional
 
 from pendulum import parse
 from tap_zoho_inventory.client import ZohoInventoryStream
@@ -187,7 +188,16 @@ class AssemblyOrdersStream(ZohoInventoryStream):
     schema_filepath = SCHEMAS_DIR / "assembly_orders_schema.json"
     custom_fields_key = "bundle"
     has_lines = False
+    
+    def get_records(self, context: Optional[dict]) -> Iterable[Dict[str, Any]]:
+        """Get records from the API."""
+        sync_assembly_orders = self.config.get("sync_assembly_orders",True)
+        if not sync_assembly_orders:
+            self.logger.info("Assembly orders sync is disabled in config. Skipping sync.")
+            return []
 
+        return super().get_records(context)
+    
     def get_child_context(self, record, context):
         """Return a child context object for a given record."""
         return {
@@ -202,7 +212,6 @@ class AssemblyOrdersDetailsStream(ZohoInventoryStream):
     records_jsonpath = "$.bundle[*]"
     schema_filepath = SCHEMAS_DIR / "assembly_orders_details_schema.json"
     custom_fields_key = "bundle"
-
     def parse_response(self, response):
         for record in extract_jsonpath(self.records_jsonpath, input=response.json()):
             record = self.move_custom_fields_to_root(record)
