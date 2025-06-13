@@ -67,10 +67,7 @@ class ZohoInventoryStream(RESTStream):
         accounts_url = self.config.get("accounts-server", default_accounts_url)
         parsed = urlparse(accounts_url)
         domain_parts = parsed.netloc.split(".")
-        if len(domain_parts) >= 2: 
-            top_level_domain = domain_parts[-1]  # if the domain is like accounts.zoho.com, the top_level_domain is com, eu, etc.
-        else:
-            raise ValueError(f"Invalid Zoho accounts URL: {accounts_url}")
+        top_level_domain =  domain_parts[-1] if len(domain_parts) >= 2 else "com"
         return top_level_domain
 
     @property
