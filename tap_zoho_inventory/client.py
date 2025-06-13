@@ -11,6 +11,7 @@ from time import sleep
 from pathlib import Path
 from pendulum import parse
 from typing import Any, Callable, Iterable, cast
+from urllib.parse import urlparse
 
 from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.pagination import BaseAPIPaginator  # noqa: TCH002
@@ -60,13 +61,24 @@ class ZohoInventoryStream(RESTStream):
             self._schema = self.schema
 
     @property
+    def domain(self) -> str:
+        """Return the domain of the Zoho accounts server."""
+        default_accounts_url = "https://accounts.zoho.com"
+        accounts_url = self._tap.config("accounts-server", default_accounts_url)
+        parsed = urlparse(accounts_url)
+        domain_parts = parsed.netloc.split(".")
+        if len(domain_parts) >= 2: 
+            top_level_domain = domain_parts[-1]  # if the domain is like accounts.zoho.com, the top_level_domain is com, eu, etc.
+        else:
+            raise ValueError(f"Invalid Zoho accounts URL: {accounts_url}")
+        return top_level_domain
+
+    @property
     def url_base(self) -> str:
-        """Return the API URL root, configurable via tap settings."""
-        account_server = self.config.get(
-            "accounts-server", "https://accounts.zoho.com"
-        )
-        account_server = account_server.replace("accounts.", "inventory.")
-        return f"{account_server}/api/v1"
+        """Return the API base URL, derived from the Zoho accounts server domain."""
+        URL = lambda domain: f"https://www.zohoapis.{domain}/inventory/v1"
+        return URL(self.domain)
+
 
     # Set this value or override `get_new_paginator`.
     next_page_token_jsonpath = "$.page_context.page"  # noqa: S105
