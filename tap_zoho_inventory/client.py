@@ -64,7 +64,7 @@ class ZohoInventoryStream(RESTStream):
     def domain(self) -> str:
         """Return the domain of the Zoho accounts server."""
         default_accounts_url = "https://accounts.zoho.com"
-        accounts_url = self._tap.config("accounts-server", default_accounts_url)
+        accounts_url = self.config.get("accounts-server", default_accounts_url)
         parsed = urlparse(accounts_url)
         domain_parts = parsed.netloc.split(".")
         if len(domain_parts) >= 2: 
@@ -76,8 +76,7 @@ class ZohoInventoryStream(RESTStream):
     @property
     def url_base(self) -> str:
         """Return the API base URL, derived from the Zoho accounts server domain."""
-        URL = lambda domain: f"https://www.zohoapis.{domain}/inventory/v1"
-        return URL(self.domain)
+        return f"https://www.zohoapis.{self.domain}/inventory/v1"
 
 
     # Set this value or override `get_new_paginator`.
@@ -125,15 +124,19 @@ class ZohoInventoryStream(RESTStream):
 
     @cached_property
     def authenticator(self) -> _Auth:
-        """Return a new authenticator object.
+        """Return a configured authenticator instance based on Zoho domain."""
+        domain = self.domain
 
-        Returns:
-            An authenticator instance.
-        """
-        account_server = self.config.get(
-            "accounts-server", "https://accounts.zoho.com"
-        )
-        auth_endpoint = f"{account_server}/oauth/v2/token"
+        domain_map = {
+            "eu": "https://accounts.zoho.eu",
+            "in": "https://accounts.zoho.in",
+            "au": "https://accounts.zoho.com.au",
+            "ca": "https://accounts.zohocloud.ca",
+        }
+
+        base_url = domain_map.get(domain, "https://accounts.zoho.com")
+        auth_endpoint = f"{base_url}/oauth/v2/token"
+
         return ZohoInventoryAuthenticator.create_for_stream(self, auth_endpoint=auth_endpoint)
 
     @property
