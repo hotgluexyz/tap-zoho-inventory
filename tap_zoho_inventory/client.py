@@ -277,7 +277,12 @@ class ZohoInventoryStream(RESTStream):
         row: dict,
         context: dict | None = None,  # noqa: ARG002
     ) -> dict | None:
-        """As needed, append or transform raw data to match expected structure.
+        """Transform raw data to match expected schema types and handle null values.
+
+        Performs the following transformations:
+        - Replaces empty strings with None across all fields
+        - Converts empty string values to None for number/integer fields
+        - Converts non-string values to strings for string fields
 
         Args:
             row: An individual record from the stream.
@@ -287,6 +292,20 @@ class ZohoInventoryStream(RESTStream):
             The updated record dictionary, or ``None`` to skip the record.
         """
         self.replace_value(row,'',None)
+
+        for key, value in row.items():
+            field_types = self.schema.get("properties", {}).get(key, {}).get("type")
+            if not field_types:
+                continue   
+            
+            # Handle number/integer fields with empty strings
+            if ('number' in field_types or 'integer' in field_types) and value == "":
+                row[key] = None
+            
+            # Handle string fields with non-string values
+            elif 'string' in field_types and value is not None and not isinstance(value, str):
+                row[key] = str(value)
+                
         return row
 
     def replace_value(self, obj,val,replacement):

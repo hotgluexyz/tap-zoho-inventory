@@ -246,7 +246,6 @@
     "weight": {
       "type": [
         "null",
-        "number",
         "string"
       ]
     },

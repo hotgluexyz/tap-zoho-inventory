@@ -160,7 +160,6 @@
         },
         "payment_terms": {
             "type": [
-                "number",
                 "null",
                 "string"
             ]

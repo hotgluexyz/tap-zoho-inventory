@@ -43,7 +43,7 @@
         "label_rate": {"type": ["null", "string"]},
         "pricebook_rate": {"type": ["null", "number"]},
         "purchase_rate": {"type": ["null", "number"]},
-        "reorder_level": {"type": ["null", "string","number"]},
+        "reorder_level": {"type": ["null", "number"]},
         "is_returnable": {"type": ["null", "boolean"]},
         "initial_stock": {"type": ["null", "number"]},
         "initial_stock_rate": {"type": ["null", "number"]},

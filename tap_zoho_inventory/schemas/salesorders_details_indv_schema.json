@@ -705,7 +705,6 @@
     },
     "payment_terms": {
       "type": [
-        "number",
         "null",
         "string"
       ]
@@ -837,7 +836,6 @@
     "discount": {
       "type": [
         "null",
-        "number",
         "string"
       ]
     },
@@ -1156,7 +1154,6 @@
     "discount_amount": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },
@@ -1169,8 +1166,7 @@
     "pricebook_id": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "is_pre_gst": {

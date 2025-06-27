@@ -256,7 +256,6 @@
     "discount": {
       "type": [
         "null",
-        "number",
         "string"
       ]
     },

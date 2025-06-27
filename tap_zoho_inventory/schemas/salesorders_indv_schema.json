@@ -699,7 +699,6 @@
     },
     "payment_terms": {
       "type": [
-        "number",
         "string",
         "null"
       ]
@@ -831,7 +830,6 @@
     "discount": {
       "type": [
         "null",
-        "number",
         "string"
       ]
     },
@@ -1156,35 +1154,30 @@
     "shipment_days": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },
     "quantity": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },
     "quantity_invoiced": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },
     "quantity_packed": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },
     "quantity_shipped": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },

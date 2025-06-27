@@ -270,15 +270,13 @@
     "initial_stock": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "initial_stock_rate": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "vendor_id": {
@@ -398,8 +396,7 @@
         "group_id": {
           "type": [
             "null",
-            "string",
-            "number"
+            "string"
           ]
         },
         "group_name": {
@@ -417,8 +414,7 @@
         "attribute_id1": {
           "type": [
             "null",
-            "string",
-            "number"
+            "string"
           ]
         },
         "attribute_name1": {
@@ -430,22 +426,19 @@
         "reorder_level": {
           "type": [
             "null",
-            "string",
             "number"
           ]
         },
         "actual_available_for_sale_stock": {
           "type": [
             "null",
-            "string",
-            "number"
+            "string"
           ]
         },
         "attribute_option_id1": {
           "type": [
             "null",
-            "string",
-            "number"
+            "string"
           ]
         },
         "attribute_option_name1": {
@@ -457,8 +450,7 @@
         "image_id": {
           "type": [
             "null",
-            "string",
-            "number"
+            "string"
           ]
         },
         "item_tax_preferences": {
@@ -470,8 +462,7 @@
         "hsn_or_sac": {
           "type": [
             "null",
-            "string",
-            "number"
+            "string"
           ]
         },
         "sat_item_key_code": {
@@ -491,36 +482,31 @@
     "committed_stock": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "actual_committed_stock": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "actual_available_for_sale_stock": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "available_for_sale_stock": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "group_id": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "group_name": {
@@ -538,8 +524,7 @@
     "attribute_id1": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "attribute_name1": {
@@ -551,22 +536,19 @@
     "reorder_level": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },
     "stock_on_hand": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "attribute_option_id1": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "attribute_option_name1": {
@@ -578,8 +560,7 @@
     "image_id": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "item_tax_preferences": {
@@ -591,8 +572,7 @@
     "hsn_or_sac": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "sat_item_key_code": {
