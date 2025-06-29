@@ -213,13 +213,9 @@
       ]
     },
     "line_items": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "type": "array"
-        }
+      "type": [
+        "null",
+        "array"
       ]
     },
     "has_qty_cancelled": {

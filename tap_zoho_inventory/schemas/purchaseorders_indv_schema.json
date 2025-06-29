@@ -123,18 +123,11 @@
       ]
     },
     "contact_persons": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
+      "type": [
+        "null",
+        "array"
       ]
-    },
+    },  
     "currency_id": {
       "type": [
         "null",
@@ -220,13 +213,9 @@
       ]
     },
     "line_items": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "type": "array"
-        }
+      "type": [
+        "null",
+        "array"
       ]
     },
     "has_qty_cancelled": {
@@ -446,7 +435,6 @@
     },
     "payment_terms": {
       "type": [
-        "integer",
         "null",
         "string"
       ]
