@@ -183,13 +183,9 @@
             ]
         },
         "line_items": {
-            "anyOf": [
-                {
-                    "type": "null"
-                },
-                {
-                    "type": "array"
-                }
+            "type": [
+                "null",
+                "array"
             ]
         },
         "billing_address": {
