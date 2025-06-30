@@ -298,12 +298,8 @@ class ZohoInventoryStream(RESTStream):
             if not field_types:
                 continue   
             
-            # Handle number/integer fields with empty strings
-            if ('number' in field_types or 'integer' in field_types) and value == "":
-                row[key] = None
-            
             # Handle string fields with non-string values
-            elif 'string' in field_types and value is not None and not isinstance(value, str):
+            if 'string' in field_types and value is not None and not isinstance(value, str):
                 row[key] = str(value)
                 
         return row
