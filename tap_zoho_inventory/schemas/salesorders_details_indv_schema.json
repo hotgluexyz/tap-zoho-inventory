@@ -9,96 +9,9 @@
       ]
     },
     "documents": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "can_send_in_mail": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
-              },
-              "file_name": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "attachment_order": {
-                "type": [
-                  "integer",
-                  "null"
-                ]
-              },
-              "source": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "document_id": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "file_size": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "source_formatted": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "uploaded_by": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "file_type": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "file_size_formatted": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "uploaded_on": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "alter_text": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "uploaded_on_date_formatted": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              }
-            }
-          }
-        }
+      "type": [
+        "null",
+        "array"
       ]
     },
     "zcrm_potential_id": {
@@ -204,54 +117,9 @@
       ]
     },
     "contact_person_details": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "phone": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "mobile": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "last_name": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "contact_person_id": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "first_name": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "email": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              }
-            }
-          }
-        }
+      "type": [
+        "null",
+        "array"
       ]
     },
     "source": {
@@ -444,13 +312,9 @@
       ]
     },
     "line_items": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "type": "array"
-        }
+      "type": [
+        "null",
+        "array"
       ]
     },
     "entity_tags": {
@@ -705,7 +569,6 @@
     },
     "payment_terms": {
       "type": [
-        "number",
         "null",
         "string"
       ]
@@ -837,7 +700,6 @@
     "discount": {
       "type": [
         "null",
-        "number",
         "string"
       ]
     },
@@ -1055,66 +917,9 @@
       }
     },
     "invoices": {
-      "anyOf": [
-        {
-          "type": "null"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "invoice_id": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "invoice_number": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "reference_number": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "status": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "date": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "due_date": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "total": {
-                "type": [
-                  "null",
-                  "number"
-                ]
-              },
-              "balance": {
-                "type": [
-                  "null",
-                  "number"
-                ]
-              }
-            }
-          }
-        }
+      "type": [
+        "null",
+        "array"
       ]
     },
     "salesreturns": {
@@ -1156,7 +961,6 @@
     "discount_amount": {
       "type": [
         "null",
-        "string",
         "number"
       ]
     },
@@ -1169,8 +973,7 @@
     "pricebook_id": {
       "type": [
         "null",
-        "string",
-        "number"
+        "string"
       ]
     },
     "is_pre_gst": {
