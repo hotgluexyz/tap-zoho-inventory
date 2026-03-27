@@ -179,7 +179,10 @@ class ZohoInventoryStream(RESTStream):
             params["sort"] = "asc"
             params["order_by"] = self.replication_key
             start_date = self.get_starting_time(context)
-            start_date = start_date + timedelta(seconds=1)
+            # Roll back 2 minutes to cover Zoho's minute-level filter granularity.
+            # Without this, records modified in the same minute as the saved state
+            # but after the exact timestamp are silently dropped.
+            start_date = start_date - timedelta(minutes=2)
             if start_date:
                 params[self.replication_key] = start_date.strftime('%Y-%m-%dT%H:%M:%S%z')
         return params
