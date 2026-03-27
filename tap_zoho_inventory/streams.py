@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from datetime import timedelta
 from typing import Iterable, Dict, Any, Optional
 
 from pendulum import parse
@@ -22,6 +23,16 @@ class ProductsStream(ZohoInventoryStream):
     schema_filepath = SCHEMAS_DIR / "items_indv_schema.json"
     custom_fields_key = "item"
     has_lines = False
+
+    def get_url_params(self, context, next_page_token):
+        params = super().get_url_params(context, next_page_token)
+        if self.replication_key and self.replication_key in params:
+            # Roll back 2 minutes to cover Zoho's minute-level filter granularity.
+            # Without this, products modified in the same minute as the saved state
+            # but after the exact timestamp are silently dropped.
+            start_date = self.get_starting_time(context) - timedelta(minutes=2)
+            params[self.replication_key] = start_date.strftime('%Y-%m-%dT%H:%M:%S%z')
+        return params
 
     def get_child_context(self, record, context):
         """Return a child context object for a given record."""
